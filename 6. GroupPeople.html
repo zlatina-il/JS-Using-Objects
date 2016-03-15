@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Group people</title>
+    <link href="styles/js-console.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="js-console"></div>
+    <script src="scripts/js-console.js"></script>
+    <script>
+
+        function Person(firstName, lastName, age) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.toString = function () {
+                return this.firstName + " " + this.lastName + " (age " + this.age+")";
+            }
+        }
+
+        function group(people, prop) {
+            switch (prop) {
+                case "firstName":
+                case "lastName":
+                case "age":
+                    {
+                        var groups = {};
+
+                        people.map(function (p) {
+                            if (!groups[p[prop]])
+                                groups[p[prop]] = new Array();
+                            groups[p[prop]].push(p);
+                        });
+
+                        return groups;
+                    }
+                default:
+                    throw new Error("No such property in Person.");
+            }
+        }
+
+        (function () {
+
+            var people = [];
+
+            people.push(new Person("Iliq", "Ivanov", 15));
+            people.push(new Person("Petyr", "Dobrev", 30));
+            people.push(new Person("Doni", "Petrov", 25));
+            people.push(new Person("Krum", "Dobrev", 15));
+            people.push(new Person("Sofiq", "Ivanova", 30));
+            people.push(new Person("Iliq", "Iliev", 25));
+
+
+            var groups = group(people, "firstName");
+
+            for (var entry in groups) {
+                jsConsole.writeLine("Group " + entry + ":" +groups[entry]);
+            }
+        })();
+    </script>
+</body>
+</html>
